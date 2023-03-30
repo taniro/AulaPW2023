@@ -3,6 +3,8 @@ package ufrn.edu.br.aula;
 import java.util.Date;
 
 public class Tarefa {
+
+    private Integer id;
     private String texto;
     private Integer prioridade;
     private final Date dataCadastro;
@@ -29,5 +31,9 @@ public class Tarefa {
 
     public Date getDataCadastro() {
         return dataCadastro;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
