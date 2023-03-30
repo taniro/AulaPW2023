@@ -13,6 +13,11 @@ public class Tarefa {
         this.dataCadastro = new Date();
     }
 
+    public Tarefa(Date data, Integer id){
+        this.id = id;
+        this.dataCadastro = data;
+    }
+
     public String getTexto() {
         return texto;
     }

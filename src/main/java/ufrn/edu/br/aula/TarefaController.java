@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Controller
 public class TarefaController {
@@ -27,11 +28,8 @@ public class TarefaController {
             t.setTexto(texto);
             t.setPrioridade(prioridade);
 
-            //TAREFA PARA CASA
-            //tenho um objeto de Tarefa pronto....
-            //salvar Tarefa no banco de dados....
-            //utilizando JDBC
-            //para isso vão precisar adicionar o JDBC como dependencia do projeto Spring
+            TarefaDao dao = new TarefaDao();
+            dao.cadastrarTarefa(t);
 
             response.setContentType("text/HTML");
             var writer = response.getWriter();
@@ -43,10 +41,12 @@ public class TarefaController {
                     "<p> Data" + t.getDataCadastro() + "</p>"
             );
 
-            for (int i = 0 ; i < 10; i++){
-                writer.println("<p> Contagem " +
-                        i +
-                        "</p>");
+            var listarTarefas = dao.listarTodasTarefas();
+
+            for (var t1 : listarTarefas){
+                writer.println("<hr /> <p>" +t1.getTexto() + "</p>");
+                writer.println("<p>" +t1.getPrioridade() + "</p>");
+                writer.println("<p>" + t1.getDataCadastro() + "</p>");
             }
 
             writer.println("</body>"+
