@@ -11,6 +11,34 @@ import java.util.List;
 
 public class TarefaDao {
 
+    public Tarefa getTarefaById(Integer id){
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Tarefa t = null;
+
+        try {
+            connection = Conexao.getConnection();
+
+            stmt = connection.prepareStatement("select * from tarefa_tbl where id = ?");
+            stmt.setInt(1, id);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                t = new Tarefa(new Date(rs.getLong("data_cadastro")), rs.getInt("id"));
+                t.setTexto(rs.getString("texto"));
+                t.setPrioridade(rs.getInt("prioridade"));
+
+            }
+            connection.close();
+
+        } catch (SQLException | URISyntaxException ex) {
+            // response.getWriter().append("Connection Failed! Check output console");
+        }
+        return t;
+    }
+
     public List<Tarefa> listarTodasTarefas(){
 
         Connection connection = null;

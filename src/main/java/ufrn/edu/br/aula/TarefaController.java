@@ -14,6 +14,27 @@ import java.util.Date;
 public class TarefaController {
 
 
+        @RequestMapping(value = "/doBuscar", method = RequestMethod.POST)
+        public void doBuscar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            var id = Integer.parseInt(request.getParameter("id"));
+
+            var dao = new TarefaDao();
+
+            Tarefa t = dao.getTarefaById(id);
+
+            var writer = response.getWriter();
+            writer.println("<html>");
+            writer.println("<body>");
+            if (t != null){
+                writer.println("<hr /> <p>" +t.getTexto() + "</p>");
+                writer.println("<p>" +t.getPrioridade() + "</p>");
+                writer.println("<p>" + t.getDataCadastro() + "</p>");
+            }else{
+                writer.println("<p> Não encontrado </p>");
+            }
+            writer.println("</body>");
+            writer.println("</html>");
+        }
         @RequestMapping(method = RequestMethod.GET, value = "/cadastrar")
         public void getTarefas(HttpServletRequest request, HttpServletResponse response) throws IOException {
             response.getWriter().println("Acesse o formulário de cadastro");
@@ -53,7 +74,6 @@ public class TarefaController {
                     "</html>"
             );
 
-            //LISTAR TODAS AS TAREFAS QUE ESTÃO NO BANCO
         }
 }
 
