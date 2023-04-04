@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -62,19 +63,36 @@ public class TarefaController {
                     "<p> Data" + t.getDataCadastro() + "</p>"
             );
 
-            var listarTarefas = dao.listarTodasTarefas();
-
-            for (var t1 : listarTarefas){
-                writer.println("<hr /> <p>" +t1.getTexto() + "</p>");
-                writer.println("<p>" +t1.getPrioridade() + "</p>");
-                writer.println("<p>" + t1.getDataCadastro() + "</p>");
-            }
-
             writer.println("</body>"+
                     "</html>"
             );
 
         }
+
+    @RequestMapping( method = RequestMethod.GET, value = "/listar")
+    public void listarTarefas(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/HTML");
+        var writer = response.getWriter();
+
+        writer.println("<html>" +
+                "<body>");
+
+        var dao = new TarefaDao();
+        var listarTarefas = dao.listarTodasTarefas();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+
+        for (var t1 : listarTarefas){
+            writer.println("<hr /> <p> Texto: " +t1.getTexto() + "</p>");
+            writer.println("<p> Prioridade: " +t1.getPrioridade() + "</p>");
+            writer.println("<p> Data de criação: " + formatter.format(t1.getDataCadastro()) + "</p>");
+        }
+
+        writer.println("</body>"+
+                "</html>"
+        );
+
+    }
 }
 
 

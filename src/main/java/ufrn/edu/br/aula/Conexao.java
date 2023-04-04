@@ -11,6 +11,11 @@ public class Conexao {
     Default env:
     DATABASE_HOST=localhost;DATABASE_PORT=5432;DATABASE_NAME=tarefadb;DATABASE_USERNAME=postgres;DATABASE_PASSWORD=postgres
     */
+
+    /*
+    * SQL PARA CRIAÇÃO DO BANCO
+    * CREATE TABLE IF NOT EXISTS tarefa_tbl (id SERIAL PRIMARY KEY, texto VARCHAR(55), prioridade INTEGER, data_cadastro bigint);
+    * */
     public static Connection getConnection() throws SQLException, URISyntaxException {
         String dbUri = System.getenv("DATABASE_HOST");
         String dbPort = System.getenv("DATABASE_PORT");
