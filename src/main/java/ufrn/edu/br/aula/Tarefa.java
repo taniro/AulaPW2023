@@ -9,6 +9,13 @@ public class Tarefa {
     private Integer prioridade;
     private final Date dataCadastro;
 
+    public Tarefa(Integer id, String texto, Integer prioridade, Date dataCadastro) {
+        this.id = id;
+        this.texto = texto;
+        this.prioridade = prioridade;
+        this.dataCadastro = dataCadastro;
+    }
+
     public Tarefa(){
         this.dataCadastro = new Date();
     }

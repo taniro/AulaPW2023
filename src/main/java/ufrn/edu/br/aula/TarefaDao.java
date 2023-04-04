@@ -11,7 +11,29 @@ import java.util.List;
 
 public class TarefaDao {
 
-    public Tarefa getTarefaById(Integer id){
+    public void updateTarefa(Tarefa t) {
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+
+        try {
+            connection = Conexao.getConnection();
+
+            stmt = connection.prepareStatement("update tarefa_tbl set texto=?, prioridade=?, data_cadastro=? where id = ?");
+            stmt.setString(1, t.getTexto());
+            stmt.setInt(2, t.getPrioridade());
+            stmt.setLong(3, t.getDataCadastro().getTime());
+            stmt.setInt(4, t.getId());
+
+            stmt.executeUpdate();
+            connection.close();
+        } catch (SQLException | URISyntaxException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public Tarefa getTarefaById(Integer id) {
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -39,7 +61,7 @@ public class TarefaDao {
         return t;
     }
 
-    public List<Tarefa> listarTodasTarefas(){
+    public List<Tarefa> listarTodasTarefas() {
 
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -67,7 +89,7 @@ public class TarefaDao {
         return listaDeTarefas;
     }
 
-    public void cadastrarTarefa(Tarefa t){
+    public void cadastrarTarefa(Tarefa t) {
 
         Connection connection = null;
         PreparedStatement stmt = null;
