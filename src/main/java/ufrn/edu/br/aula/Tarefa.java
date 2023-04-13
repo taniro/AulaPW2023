@@ -48,4 +48,14 @@ public class Tarefa {
     public Integer getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Tarefa{" +
+                "id=" + id +
+                ", texto='" + texto + '\'' +
+                ", prioridade=" + prioridade +
+                ", dataCadastro=" + dataCadastro +
+                '}';
+    }
 }

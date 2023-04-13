@@ -39,7 +39,7 @@ public class TarefaController {
                     "<html>");
         }
         @RequestMapping(method = RequestMethod.POST, value = "/doAtualizar")
-        public void doAtualizar(HttpServletRequest request, HttpServletResponse response){
+        public void doAtualizar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
             var id = Integer.parseInt(request.getParameter("id"));
             var texto = request.getParameter("texto");
@@ -51,6 +51,8 @@ public class TarefaController {
             var dao = new TarefaDao();
 
             dao.updateTarefa(tarefa);
+
+            response.sendRedirect("doListar");
         }
 
         @RequestMapping(value = "/doBuscar", method = RequestMethod.GET)
@@ -80,6 +82,14 @@ public class TarefaController {
             var texto = request.getParameter("texto");
             var prioridade = Integer.parseInt(request.getParameter("prioridade"));
 
+            //var prefs = request.getParameterValues("prefs");
+            //System.out.println(prefs);
+
+            /*
+            for (String s:prefs) {
+                System.out.println(s);
+            }*/
+
             t.setTexto(texto);
             t.setPrioridade(prioridade);
 
@@ -104,14 +114,22 @@ public class TarefaController {
         @RequestMapping(method = RequestMethod.GET, value = "/doListar")
         public void listarTarefas(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+            /*Tarefa t = (Tarefa) request.getAttribute("tarefa");
+            System.out.println(t.toString());*/
+
             var dao = new TarefaDao();
             var writer = response.getWriter();
+
+            String browser = request.getHeader("pipoca");
+
 
             var listarTarefas = dao.listarTodasTarefas();
             response.setContentType("text/HTML");
 
             writer.println("<html>" +
                     "<body>");
+            writer.println(browser);
+
             for (var t1 : listarTarefas){
                 writer.println("<p>" +t1.getTexto() + "</p>");
                 writer.println("<p>" +t1.getPrioridade() + "</p>");
